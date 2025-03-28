@@ -1,12 +1,10 @@
 {
   "name": "lab",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -17,5 +15,8 @@
     "express": "^4.21.2",
     "msnodesqlv8": "^4.5.0",
     "mssql": "^11.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
   }
 }
