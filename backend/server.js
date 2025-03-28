@@ -11,16 +11,17 @@ app.use(express.json());
 // Import routes
 const movieRoutes = require('./routes/movies');
 const genreRoutes = require('./routes/genres');
+const userRoutes = require('./routes/users'); // ✅ NEW
 
 // Root route
 app.get('/', (req, res) => {
   res.send('✅ Backend running with Windows Authentication!');
 });
 
-// Mount movie routes
-
+// Mount routes
 app.use('/api/movies', movieRoutes);
 app.use('/api/genres', genreRoutes);
+app.use('/api/users', userRoutes); // ✅ NEW
 
 // Start server
 app.listen(PORT, () => {
