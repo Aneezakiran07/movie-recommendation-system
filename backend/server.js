@@ -14,8 +14,7 @@ const genreRoutes = require('./routes/genres');
 const userRoutes = require('./routes/users');
 const ratingRoutes = require('./routes/ratings');
 const watchlistRoutes = require('./routes/watchlist');
-
-
+const likeRoutes = require('./routes/likes');
 
 // Root route
 app.get('/', (req, res) => {
@@ -28,6 +27,7 @@ app.use('/api/genres', genreRoutes);
 app.use('/api/users', userRoutes); 
 app.use('/api/ratings', ratingRoutes);
 app.use('/api/watchlist', watchlistRoutes);
+app.use('/api/likes', likeRoutes);
 
 
 // Start server
