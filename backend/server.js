@@ -11,7 +11,10 @@ app.use(express.json());
 // Import routes
 const movieRoutes = require('./routes/movies');
 const genreRoutes = require('./routes/genres');
-const userRoutes = require('./routes/users'); // ✅ NEW
+const userRoutes = require('./routes/users');
+const ratingRoutes = require('./routes/ratings');
+
+
 
 // Root route
 app.get('/', (req, res) => {
@@ -21,7 +24,8 @@ app.get('/', (req, res) => {
 // Mount routes
 app.use('/api/movies', movieRoutes);
 app.use('/api/genres', genreRoutes);
-app.use('/api/users', userRoutes); // ✅ NEW
+app.use('/api/users', userRoutes); 
+app.use('/api/ratings', ratingRoutes);
 
 // Start server
 app.listen(PORT, () => {
