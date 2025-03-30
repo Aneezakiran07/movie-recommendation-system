@@ -1,11 +1,16 @@
-const sql = require('mssql/msnodesqlv8');
+const sql = require('mssql');
 
+// Database Configuration
 const config = {
-  server: 'ANEEZAPC',
-  database: 'dbp',
-  driver: 'msnodesqlv8',
+  user: "DBProject",
+  password: "Zamam12345",
+  server: "localhost",
+  database: "DB_Project",
+  port: 1433,
   options: {
-    trustedConnection: true
+    encrypt: false,
+    trustServerCertificate: true,
+    enableArithAbort: true
   }
 };
 

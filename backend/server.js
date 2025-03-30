@@ -12,7 +12,7 @@ app.use(express.json());
 const movieRoutes = require('./routes/movies');
 const genreRoutes = require('./routes/genres');
 const userRoutes = require('./routes/users');
-const ratingRoutes = require('./routes/ratings');
+const ratingRoutes = require('./routes/rating');
 const watchlistRoutes = require('./routes/watchlist');
 const likeRoutes = require('./routes/likes');
 

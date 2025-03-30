@@ -1,0 +1,89 @@
+/* Navbar Container */
+.navbar {
+    background-color: #121212; /* Dark background */
+    color: #ff3333; /* Bright red text */
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    gap: 35px;
+    font-size: 18px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #ff4444; /* Bright red */
+    font-weight: 600;
+    transition: 0.3s ease-in-out;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* Hover Effect */
+.nav-links a:hover {
+    color: #fff;
+    background-color: #ff4444; /* Bright red hover effect */
+    box-shadow: 0 0 10px rgba(255, 68, 68, 0.7);
+    transition: 0.3s ease-in-out;
+}
+
+/* Search Box */
+.search-box {
+    display: flex;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* Search Input */
+.search-input {
+    padding: 10px;
+    border: none;
+    border-radius: 6px 0 0 6px;
+    background-color: #222;
+    color: #fff;
+    width: 180px;
+    font-size: 16px;
+    outline: none;
+}
+
+/* Search Button */
+.search-button {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
+}
+
+/* Search Button Hover Effect */
+.search-button:hover {
+    background-color: #ff0000;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .nav-links {
+        gap: 20px;
+        font-size: 16px;
+    }
+
+    .search-input {
+        width: 140px;
+    }
+}

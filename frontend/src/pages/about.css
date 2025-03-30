@@ -1,0 +1,103 @@
+/* Global Background Styling */
+body {
+    background-color: #0d0d0d;
+    font-family: 'Arial', sans-serif;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+}
+
+/* About Page Container */
+.about-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    text-align: left;
+}
+
+/* Headings */
+.about-container h1, .about-container h2 {
+    color: #ff3333; /* Red color */
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+/* Stylish Red Underline Effect */
+.about-container h1::after,
+.about-container h2::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, transparent, #ff3333, transparent);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+/* Paragraphs */
+.about-container p {
+    font-size: 18px;
+    line-height: 1.8;
+    text-align: justify;
+    color: #cfcfcf;
+}
+
+/* List Styling */
+.about-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.about-container ul li {
+    padding: 10px 0;
+    font-size: 17px;
+    padding-left: 12px;
+    transition: 0.3s ease-in-out;
+}
+
+/* Red Diamond Symbol for Features, How to Use, and Need Help */
+.about-container h2::before {
+    color: #ff3333; 
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+/* Links */
+.about-container a {
+    color: #ff9900;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.about-container a:hover {
+    text-decoration: underline;
+    color: #ff3333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .about-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .about-container h1, .about-container h2 {
+        font-size: 22px;
+    }
+
+    .about-container p, .about-container ul li {
+        font-size: 16px;
+    }
+}
