@@ -1,27 +1,25 @@
-import { useEffect, useState } from "react";
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import Navbar from "./components/navbar";
+import Footer from "./components/footer";
+import About from "./pages/about";
+import Home from "./pages/home"; // Import Home page
 
 function App() {
-  const [movies, setMovies] = useState([]);
-
-  useEffect(() => {
-    fetch("http://localhost:4000/api/movies")
-      .then((res) => res.json())
-      .then((data) => setMovies(data))
-      .catch((err) => console.error("Error fetching movies:", err));
-  }, []);
-
   return (
-    <div className="App">
-      <h1>🎬 Movie List</h1>
-      <ul>
-        {movies.map((movie) => (
-          <li key={movie.Movie_id}>
-            <strong>{movie.title}</strong> ({movie.release_date?.split('T')[0]}) - ⭐ {movie.vote_average}
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Router>
+      <div id="root">
+        <Navbar />
+        <div className="main-content">
+          <Routes>
+            <Route path="/" element={<Home />} /> {/* Home page */}
+            <Route path="/about" element={<About />} /> {/* About page */}
+          </Routes>
+        </div>
+        <Footer />
+      </div>
+    </Router>
   );
 }
 

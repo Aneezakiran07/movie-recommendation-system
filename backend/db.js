@@ -1,11 +1,14 @@
-const sql = require('mssql/msnodesqlv8');
+const sql = require('mssql');
 
+// Database Configuration
 const config = {
-  server: 'AneezaPC', // ✅ Your computer name (you confirmed this)
+  server: 'ANEEZAPC',
   database: 'dbp',
   driver: 'msnodesqlv8',
   options: {
-    trustedConnection: true
+    encrypt: false,
+    trustServerCertificate: true,
+    enableArithAbort: true
   }
 };
 
