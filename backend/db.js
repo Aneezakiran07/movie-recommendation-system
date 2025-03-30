@@ -2,11 +2,9 @@ const sql = require('mssql');
 
 // Database Configuration
 const config = {
-  user: "DBProject",
-  password: "Zamam12345",
-  server: "localhost",
-  database: "DB_Project",
-  port: 1433,
+  server: 'ANEEZAPC',
+  database: 'dbp',
+  driver: 'msnodesqlv8',
   options: {
     encrypt: false,
     trustServerCertificate: true,
@@ -14,14 +12,13 @@ const config = {
   }
 };
 
-async function connectToDB() {
+const connectToDB = async () => {
   try {
-    const pool = await sql.connect(config);
-    return pool;
+    return await sql.connect(config);
   } catch (err) {
     console.error('❌ SQL CONNECTION ERROR:', err);
     throw err;
   }
-}
+};
 
-module.exports = { sql, connectToDB };
+module.exports = { connectToDB, sql };

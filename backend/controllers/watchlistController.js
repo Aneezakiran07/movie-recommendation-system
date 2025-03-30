@@ -1,5 +1,4 @@
-const { connectToDB } = require('../db');
-const sql = require('mssql');
+const { connectToDB, sql } = require('../db');
 
 // 🔹 Add movie to watchlist
 const addToWatchlist = async (req, res) => {
