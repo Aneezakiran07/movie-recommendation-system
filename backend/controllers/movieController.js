@@ -1,5 +1,6 @@
-const { connectToDB } = require('../db');
-const sql = require('mssql'); // required for .input()
+const { connectToDB, sql } = require('../db');
+
+
 
 // 🔹 GET all movies
 const getAllMovies = async (req, res) => {

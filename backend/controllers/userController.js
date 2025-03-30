@@ -1,5 +1,4 @@
-const { connectToDB } = require('../db');
-const sql = require('mssql');
+const { connectToDB, sql } = require('../db');
 
 // 🔹 Add a new user
 const createUser = async (req, res) => {

@@ -4,7 +4,7 @@ const {
   likeMovie,
   getLikedMovies,
   unlikeMovie
-} = require('../controllers/likeController');
+} = require('../controllers/likesController');
 
 // Like a movie
 router.post('/', likeMovie);

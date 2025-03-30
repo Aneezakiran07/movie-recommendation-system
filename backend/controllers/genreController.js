@@ -1,4 +1,4 @@
-const { connectToDB } = require('../db');
+const { connectToDB, sql } = require('../db');
 
 const getAllGenres = async (req, res) => {
   try {

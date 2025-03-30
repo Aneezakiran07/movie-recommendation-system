@@ -1,7 +1,7 @@
 const sql = require('mssql/msnodesqlv8');
 
 const config = {
-  server: 'ANEEZAPC',
+  server: 'AneezaPC', // ✅ Your computer name (you confirmed this)
   database: 'dbp',
   driver: 'msnodesqlv8',
   options: {
@@ -9,14 +9,13 @@ const config = {
   }
 };
 
-async function connectToDB() {
+const connectToDB = async () => {
   try {
-    const pool = await sql.connect(config);
-    return pool;
+    return await sql.connect(config);
   } catch (err) {
     console.error('❌ SQL CONNECTION ERROR:', err);
     throw err;
   }
-}
+};
 
-module.exports = { sql, connectToDB };
+module.exports = { connectToDB, sql };
