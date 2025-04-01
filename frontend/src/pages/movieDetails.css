@@ -1,0 +1,57 @@
+.movie-details-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #1c1c1c;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+/* Title Styling */
+.movie-details-container h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #f4c10f;
+    text-transform: uppercase;
+}
+
+/* Movie Poster */
+.movie-poster {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
+    margin-bottom: 15px;
+}
+
+/* Movie Details */
+.movie-details-container p {
+    font-size: 1.1rem;
+    line-height: 1.8; /* Increased for better readability */
+    margin: 10px 0;
+    text-align: justify; /* Aligns text evenly on both sides */
+    padding: 0 10px; /* Adds a little padding for a clean look */
+}
+
+/* Highlight important text */
+.movie-details-container strong {
+    color: #f4c10f;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .movie-details-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .movie-details-container h2 {
+        font-size: 1.8rem;
+    }
+
+    .movie-details-container p {
+        font-size: 1rem;
+    }
+}

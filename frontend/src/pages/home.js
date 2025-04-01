@@ -63,7 +63,6 @@ function Home() {
               <img src={movie.poster} alt={movie.title} />
 
               <h2 className="movie-title">{movie.title}</h2>
-              <p className="movie-details">{movie.description}</p>
 
               <p className="movie-extra">
               <br /><br />
