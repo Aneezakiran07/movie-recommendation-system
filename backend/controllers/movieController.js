@@ -93,12 +93,62 @@ const getMovieById = async (req, res) => {
   }
 };
 
+// 🔹 GET recommended movies for a user
+const getRecommendedMovies = async (req, res) => {
+  const userId = req.params.userId;
+
+  const query = `
+    SELECT DISTINCT m.*
+    FROM Movies m
+    JOIN movie_genres mg ON m.Movie_id = mg.movie_id
+    WHERE mg.genre_id IN (
+        SELECT DISTINCT mg.genre_id
+        FROM movie_genres mg
+        JOIN Ratings r ON mg.movie_id = r.movie_id
+        WHERE r.user_id = @userId AND r.rating >= 4
+        UNION
+        SELECT DISTINCT mg.genre_id
+        FROM movie_genres mg
+        JOIN Likes l ON mg.movie_id = l.movie_id
+        WHERE l.user_id = @userId AND l.liked_status = 1
+    )
+    AND mg.genre_id NOT IN (
+        SELECT DISTINCT mg.genre_id
+        FROM movie_genres mg
+        JOIN Ratings r ON mg.movie_id = r.movie_id
+        WHERE r.user_id = @userId AND r.rating <= 2
+    )
+    AND m.Movie_id NOT IN (
+        SELECT movie_id FROM Ratings WHERE user_id = @userId
+        UNION
+        SELECT movie_id FROM Likes WHERE user_id = @userId
+        UNION
+        SELECT movie_id FROM Watchlist WHERE user_id = @userId
+    )
+    ORDER BY m.ratings DESC;
+  `;
+
+  try {
+    const pool = await connectToDB();
+    const result = await pool.request()
+      .input('userId', sql.Int, userId)
+      .query(query);
+
+    res.json(result.recordset);
+  } catch (err) {
+    console.error(' Error generating recommendations:', err);
+    res.status(500).json({ error: 'Failed to generate recommendations' });
+  }
+};
+
+
 module.exports = {
   getAllMovies,
   getTopRatedMovies,
   searchMoviesByTitle,
   getMoviesByGenre,
-  getMovieById
+  getMovieById,
+  getRecommendedMovies
 };
 
 
