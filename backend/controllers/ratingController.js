@@ -1,6 +1,6 @@
 const { connectToDB, sql } = require('../db');
 
-// 🔹 Add a new rating
+//  Add a new rating
 const addRating = async (req, res) => {
   const { user_id, movie_id, rating } = req.body;
 
@@ -21,12 +21,12 @@ const addRating = async (req, res) => {
 
     res.status(201).json({ message: 'Rating added successfully' });
   } catch (err) {
-    console.error('❌ Error adding rating:', err);
+    console.error(' Error adding rating:', err);
     res.status(500).json({ error: 'Failed to add rating' });
   }
 };
 
-// 🔹 Get ratings by user ID
+//  Get ratings by user ID
 const getRatingsByUser = async (req, res) => {
   const userId = req.params.userId;
 
@@ -38,12 +38,12 @@ const getRatingsByUser = async (req, res) => {
 
     res.json(result.recordset);
   } catch (err) {
-    console.error('❌ Error fetching user ratings:', err);
+    console.error(' Error fetching user ratings:', err);
     res.status(500).json({ error: 'Failed to fetch user ratings' });
   }
 };
 
-// 🔹 Get ratings by movie ID
+//  Get ratings by movie ID
 const getRatingsByMovie = async (req, res) => {
   const movieId = req.params.movieId;
 
@@ -55,7 +55,7 @@ const getRatingsByMovie = async (req, res) => {
 
     res.json(result.recordset);
   } catch (err) {
-    console.error('❌ Error fetching movie ratings:', err);
+    console.error(' Error fetching movie ratings:', err);
     res.status(500).json({ error: 'Failed to fetch movie ratings' });
   }
 };
