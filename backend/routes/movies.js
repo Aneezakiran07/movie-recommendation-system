@@ -7,6 +7,7 @@ const {
   searchMoviesByTitle,
   getMoviesByGenre,
   getMovieById
+  getRecommendedMovies
 } = require('../controllers/movieController');
 
 // 🔹 Get all movies
@@ -23,5 +24,8 @@ router.get('/genre/:genreId', getMoviesByGenre);
 
 // 🔹 Movie by ID
 router.get('/:id', getMovieById);
+
+// Movie recommendation
+router.get('/recommend/:userId', getRecommendedMovies);
 
 module.exports = router;
