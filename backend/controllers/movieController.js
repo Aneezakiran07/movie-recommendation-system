@@ -19,7 +19,7 @@ const getTopRatedMovies = async (req, res) => {
   try {
     const pool = await connectToDB();
     const result = await pool.request().query(`
-      SELECT TOP 100 * FROM Movies ORDER BY vote_average DESC 
+      SELECT TOP 100 * FROM Movies ORDER BY ratings DESC 
     `);
     res.json(result.recordset);
   } catch (err) {
