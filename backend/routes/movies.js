@@ -11,19 +11,19 @@ const {
   filterMovies
 } = require('../controllers/movieController');
 
-// 🔹 Get all movies
+//  Get all movies
 router.get('/', getAllMovies);
 
-// 🔹 Top-rated movies
+// Top-rated movies
 router.get('/top-rated', getTopRatedMovies);
 
-// 🔹 Search by title (query param: ?title=...)
+//  Search by title (query param: ?title=...)
 router.get('/search', searchMoviesByTitle);
 
-// 🔹 Movies by genre
+//  Movies by genre
 router.get('/genre/:genreId', getMoviesByGenre);
 
-// 🔹 Movie by ID
+//  Movie by ID
 router.get('/:id', getMovieById);
 
 // Movie recommendation
