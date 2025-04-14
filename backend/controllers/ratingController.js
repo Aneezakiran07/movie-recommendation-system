@@ -60,27 +60,12 @@ const getRatingsByMovie = async (req, res) => {
   }
 };
 
-// 🔹 Get average rating for a movie
-const getAverageRating = async (req, res) => {
-  const movieId = req.params.movieId;
 
-  try {
-    const pool = await connectToDB();
-    const result = await pool.request()
-      .input('movieId', sql.Int, movieId)
-      .query('SELECT AVG(rating) AS averageRating FROM Ratings WHERE movie_id = @movieId');
-
-    res.json(result.recordset[0]);
-  } catch (err) {
-    console.error('❌ Error calculating average rating:', err);
-    res.status(500).json({ error: 'Failed to fetch average rating' });
-  }
-};
 
 module.exports = {
   addRating,
   getRatingsByUser,
-  getRatingsByMovie,
-  getAverageRating
+  getRatingsByMovie
+
 };
 
