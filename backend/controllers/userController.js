@@ -17,7 +17,7 @@ const createUser = async (req, res) => {
 
     res.status(201).json({ message: 'User created successfully' });
   } catch (err) {
-    console.error('❌ Error creating user:', err);
+    console.error(' Error creating user:', err);
     res.status(500).json({ error: 'Failed to create user' });
   }
 };
@@ -29,7 +29,7 @@ const getAllUsers = async (req, res) => {
     const result = await pool.request().query('SELECT * FROM Users');
     res.json(result.recordset);
   } catch (err) {
-    console.error('❌ Error fetching users:', err);
+    console.error(' Error fetching users:', err);
     res.status(500).json({ error: 'Failed to retrieve users' });
   }
 };
@@ -50,7 +50,7 @@ const deleteUser = async (req, res) => {
 
     res.json({ message: 'User deleted successfully' });
   } catch (err) {
-    console.error('❌ Error deleting user:', err);
+    console.error(' Error deleting user:', err);
     res.status(500).json({ error: 'Failed to delete user' });
   }
 };
