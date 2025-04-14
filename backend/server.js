@@ -18,7 +18,7 @@ const likeRoutes = require('./routes/likes');
 
 // Root route
 app.get('/', (req, res) => {
-  res.send('✅ Backend running with Windows Authentication!');
+  res.send(' Backend running with Windows Authentication!');
 });
 
 // Mount routes
@@ -32,5 +32,5 @@ app.use('/api/likes', likeRoutes);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`✅ Server running at http://localhost:${PORT}`);
+  console.log(` Server running at http://localhost:${PORT}`);
 });
