@@ -2,19 +2,19 @@ const { connectToDB, sql } = require('../db');
 
 
 
-// 🔹 GET all movies
+//  GET all movies
 const getAllMovies = async (req, res) => {
   try {
     const pool = await connectToDB();
     const result = await pool.request().query('SELECT * FROM Movies');
     res.json(result.recordset);
   } catch (err) {
-    console.error('❌ Error fetching all movies:', err);
+    console.error(' Error fetching all movies:', err);
     res.status(500).json({ error: 'Database query failed' });
   }
 };
 
-// 🔹 GET top 10 rated movies
+//  GET top 10 rated movies
 const getTopRatedMovies = async (req, res) => {
   try {
     const pool = await connectToDB();
@@ -23,12 +23,12 @@ const getTopRatedMovies = async (req, res) => {
     `);
     res.json(result.recordset);
   } catch (err) {
-    console.error('❌ Error fetching top-rated movies:', err);
+    console.error(' Error fetching top-rated movies:', err);
     res.status(500).json({ error: 'Failed to retrieve top-rated movies' });
   }
 };
 
-// 🔹 GET movies by title search
+//  GET movies by title search
 const searchMoviesByTitle = async (req, res) => {
   const title = req.query.title;
 
@@ -45,12 +45,12 @@ const searchMoviesByTitle = async (req, res) => {
     
     res.json(result.recordset);
   } catch (err) {
-    console.error('❌ Error searching movies by title:', err);
+    console.error(' Error searching movies by title:', err);
     res.status(500).json({ error: 'Failed to search movies' });
   }
 };
 
-// 🔹 GET movies by genre
+//  GET movies by genre
 const getMoviesByGenre = async (req, res) => {
   const genreId = req.params.genreId;
 
@@ -67,12 +67,12 @@ const getMoviesByGenre = async (req, res) => {
 
     res.json(result.recordset);
   } catch (err) {
-    console.error('❌ Error fetching movies by genre:', err);
+    console.error(' Error fetching movies by genre:', err);
     res.status(500).json({ error: 'Failed to retrieve movies by genre' });
   }
 };
 
-// 🔹 GET single movie by ID
+//  GET single movie by ID
 const getMovieById = async (req, res) => {
   const movieId = req.params.id;
 
@@ -88,12 +88,12 @@ const getMovieById = async (req, res) => {
 
     res.json(result.recordset[0]);
   } catch (err) {
-    console.error('❌ Error fetching movie by ID:', err);
+    console.error(' Error fetching movie by ID:', err);
     res.status(500).json({ error: 'Failed to retrieve movie' });
   }
 };
 
-// 🔹 GET recommended movies for a user
+//  GET recommended movies for a user
 const getRecommendedMovies = async (req, res) => {
   const userId = req.params.userId;
 
@@ -209,7 +209,7 @@ const filterMovies = async (req, res) => {
     const result = await request.query(query);
     res.json(result.recordset);
   } catch (err) {
-    console.error('❌ Error filtering movies:', err);
+    console.error(' Error filtering movies:', err);
     res.status(500).json({ error: 'Failed to filter movies' });
   }
 };
