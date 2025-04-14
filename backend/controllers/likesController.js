@@ -1,6 +1,6 @@
 const { connectToDB, sql } = require('../db');
 
-// 🔹 Like a movie
+//  Like a movie
 const likeMovie = async (req, res) => {
   const { user_id, movie_id } = req.body;
 
@@ -26,7 +26,7 @@ const likeMovie = async (req, res) => {
   }
 };
 
-// 🔹 Get liked movies of a user
+//  Get liked movies of a user
 const getLikedMovies = async (req, res) => {
   const userId = req.params.userId;
 
@@ -43,12 +43,12 @@ const getLikedMovies = async (req, res) => {
 
     res.json(result.recordset);
   } catch (err) {
-    console.error('❌ Error fetching liked movies:', err);
+    console.error(' Error fetching liked movies:', err);
     res.status(500).json({ error: 'Failed to fetch liked movies' });
   }
 };
 
-// 🔹 Unlike a movie (remove like)
+//  Unlike a movie (remove like)
 const unlikeMovie = async (req, res) => {
   const { user_id, movie_id } = req.body;
 
@@ -63,7 +63,7 @@ const unlikeMovie = async (req, res) => {
 
     res.json({ message: 'Movie unliked successfully' });
   } catch (err) {
-    console.error('❌ Error unliking movie:', err);
+    console.error(' Error unliking movie:', err);
     res.status(500).json({ error: 'Failed to unlike movie' });
   }
 };
