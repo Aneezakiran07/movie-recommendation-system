@@ -18,8 +18,9 @@ function SearchResults() {
   const queryParams = new URLSearchParams(location.search);
   const searchTerm = queryParams.get("title");
 
-  const observer = useRef();
+  const sentinelRef = useRef(null);
 
+  // Fetch movies from your backend
   useEffect(() => {
     if (!searchTerm) return;
 
@@ -30,7 +31,6 @@ function SearchResults() {
           `http://localhost:4000/api/movies/search?title=${encodeURIComponent(searchTerm)}`
         );
         if (!res.ok) throw new Error("Failed to fetch movies");
-
         const data = await res.json();
         setAllMovies(data);
         setVisibleMovies([]);
@@ -45,8 +45,9 @@ function SearchResults() {
     fetchMovies();
   }, [searchTerm]);
 
+  // Fetch TMDB posters if not already present
   const loadMoviesWithPosters = useCallback(async (movies) => {
-    const withPosters = await Promise.all(
+    return Promise.all(
       movies.map(async (movie) => {
         if (movie.poster_path) return movie;
 
@@ -62,10 +63,9 @@ function SearchResults() {
         }
       })
     );
-
-    return withPosters;
   }, []);
 
+  // Load current page movies
   useEffect(() => {
     const load = async () => {
       if (allMovies.length === 0) return;
@@ -75,29 +75,33 @@ function SearchResults() {
 
       const withPosters = await loadMoviesWithPosters(chunk);
       setVisibleMovies((prev) => [...prev, ...withPosters]);
-      setLoading(false);
       setLoadingMore(false);
     };
 
-    load();
-  }, [page, allMovies, loadMoviesWithPosters]);
+    if (!loading) {
+      load();
+    }
+  }, [page, allMovies, loadMoviesWithPosters, loading]);
 
-  const lastMovieRef = useCallback(
-    (node) => {
-      if (loadingMore) return;
-      if (observer.current) observer.current.disconnect();
+  // Infinite Scroll using IntersectionObserver
+  useEffect(() => {
+    if (loadingMore || loading) return;
+    if (!sentinelRef.current) return;
 
-      observer.current = new IntersectionObserver((entries) => {
+    const currentObserver = new IntersectionObserver(
+      (entries) => {
         if (entries[0].isIntersecting && visibleMovies.length < allMovies.length) {
           setLoadingMore(true);
           setPage((prev) => prev + 1);
         }
-      });
+      },
+      { threshold: 1.0 }
+    );
 
-      if (node) observer.current.observe(node);
-    },
-    [loadingMore, visibleMovies.length, allMovies.length]
-  );
+    currentObserver.observe(sentinelRef.current);
+
+    return () => currentObserver.disconnect();
+  }, [loadingMore, loading, visibleMovies.length, allMovies.length]);
 
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
@@ -106,18 +110,15 @@ function SearchResults() {
       <h2>Search Results For: {searchTerm}</h2>
       <div className="search-movie-list">
         {visibleMovies.length > 0 ? (
-          visibleMovies.map((movie, idx) => {
+          visibleMovies.map((movie) => {
             const posterUrl = movie.poster_path
               ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
               : "https://via.placeholder.com/300x450?text=No+Image";
-
-            const isLast = idx === visibleMovies.length - 1;
 
             return (
               <div
                 key={movie.id}
                 className="search-movie-card"
-                ref={isLast ? lastMovieRef : null}
                 onClick={() =>
                   navigate(`/movie/${movie.Movie_id}/${encodeURIComponent(movie.title)}`)
                 }
@@ -127,7 +128,7 @@ function SearchResults() {
                 <h3>{movie.title}</h3>
                 <p>
                   <strong>⭐ Rating:</strong>{" "}
-                  {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}
+                  {movie.ratings ? movie.ratings.toFixed(1) : "N/A"}
                 </p>
                 <p>
                   <strong>🌍 Language:</strong>{" "}
@@ -145,7 +146,10 @@ function SearchResults() {
         ) : null}
       </div>
 
+      <div ref={sentinelRef} style={{ height: "20px" }}></div>
+
       {loading && <p className="loading-text">Loading...</p>}
+      {loadingMore && <p className="loading-text">Loading more...</p>}
     </div>
   );
 }

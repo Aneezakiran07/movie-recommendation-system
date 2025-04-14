@@ -88,12 +88,11 @@ function MovieDetails() {
         className="movie-poster"
       />
       <p><strong>Overview:</strong> {movie.description || "No description available."}</p>
-      <p><strong>⭐ Rating:</strong> {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}</p>
+      <p><strong>⭐ Rating:</strong> {movie.ratings ? movie.ratings.toFixed(1) : "N/A"}</p>
       <p><strong>🌍 Language:</strong> {movie.original_language?.toUpperCase() || "Unknown"}</p>
       <p><strong>📏 Duration:</strong> {movie.duration_minutes || "Unknown"} min</p>
       <p><strong>📅 Release Date:</strong> {movie.release_date || "Unknown"}</p>
 
-      {/* Cast and Crew */}
       {(cast.length > 0 || crew.producers.length > 0 || crew.writers.length > 0) && (
         <div className="movie-credits">
           {cast.length > 0 && (

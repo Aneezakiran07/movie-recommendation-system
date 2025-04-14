@@ -69,7 +69,7 @@ function Home() {
               <span>Release Date: </span> 
 <strong>{new Date(movie.release_date).toISOString().split("T")[0].replace(/-/g, ":")}</strong><br />
                 <span>🌍Language: </span> <strong>{(movie.original_language || "N/A").toUpperCase()}</strong> <br />
-                <span>Rating: </span> <FaStar color="yellow" size={16} /> <strong>{movie.vote_average}</strong> <br />
+                <span>Rating: </span> <FaStar color="yellow" size={16} /> <strong>{movie.ratings}</strong> <br />
                 <span>Duration: </span> <strong>{movie.duration_minutes}</strong> min
               </p>
             </div>
