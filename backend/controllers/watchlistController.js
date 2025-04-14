@@ -20,7 +20,7 @@ const addToWatchlist = async (req, res) => {
 
     res.status(201).json({ message: 'Movie added to watchlist' });
   } catch (err) {
-    console.error('❌ Error adding to watchlist:', err);
+    console.error(' Error adding to watchlist:', err);
     res.status(500).json({ error: 'Failed to add movie to watchlist' });
   }
 };
@@ -42,7 +42,7 @@ const getWatchlist = async (req, res) => {
 
     res.json(result.recordset);
   } catch (err) {
-    console.error('❌ Error fetching watchlist:', err);
+    console.error(' Error fetching watchlist:', err);
     res.status(500).json({ error: 'Failed to fetch watchlist' });
   }
 };
@@ -62,7 +62,7 @@ const removeFromWatchlist = async (req, res) => {
 
     res.json({ message: 'Movie removed from watchlist' });
   } catch (err) {
-    console.error('❌ Error removing from watchlist:', err);
+    console.error(' Error removing from watchlist:', err);
     res.status(500).json({ error: 'Failed to remove movie' });
   }
 };
