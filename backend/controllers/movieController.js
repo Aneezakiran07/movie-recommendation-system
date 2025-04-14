@@ -141,6 +141,77 @@ const getRecommendedMovies = async (req, res) => {
   }
 };
 
+//filtered search 
+const filterMovies = async (req, res) => {
+  const {
+    title,
+    genre,
+    minRating,
+    maxRating,
+    language,
+    year
+  } = req.query;
+
+  let conditions = [];
+  let inputs = [];
+
+  if (title) {
+    conditions.push('m.title LIKE @title');
+    inputs.push({ name: 'title', type: sql.VarChar, value: `%${title}%` });
+  }
+
+  if (genre) {
+    conditions.push('mg.genre_id = @genreId');
+    inputs.push({ name: 'genreId', type: sql.Int, value: parseInt(genre) });
+  }
+
+  if (minRating) {
+    conditions.push('m.ratings >= @minRating');
+    inputs.push({ name: 'minRating', type: sql.Float, value: parseFloat(minRating) });
+  }
+
+  if (maxRating) {
+    conditions.push('m.ratings <= @maxRating');
+    inputs.push({ name: 'maxRating', type: sql.Float, value: parseFloat(maxRating) });
+  }
+
+  if (language) {
+    conditions.push('m.original_language = @language');
+    inputs.push({ name: 'language', type: sql.VarChar, value: language });
+  }
+
+  if (year) {
+    conditions.push('YEAR(m.release_date) = @year');
+    inputs.push({ name: 'year', type: sql.Int, value: parseInt(year) });
+  }
+
+  const whereClause = conditions.length > 0
+    ? 'WHERE ' + conditions.join(' AND ')
+    : '';
+
+  const query = `
+    SELECT DISTINCT m.*
+    FROM Movies m
+    LEFT JOIN movie_genres mg ON m.Movie_id = mg.movie_id
+    ${whereClause}
+    ORDER BY m.ratings DESC;
+  `;
+
+  try {
+    const pool = await connectToDB();
+    let request = pool.request();
+
+    inputs.forEach(input => {
+      request = request.input(input.name, input.type, input.value);
+    });
+
+    const result = await request.query(query);
+    res.json(result.recordset);
+  } catch (err) {
+    console.error('❌ Error filtering movies:', err);
+    res.status(500).json({ error: 'Failed to filter movies' });
+  }
+};
 
 module.exports = {
   getAllMovies,
@@ -148,7 +219,8 @@ module.exports = {
   searchMoviesByTitle,
   getMoviesByGenre,
   getMovieById,
-  getRecommendedMovies
+  getRecommendedMovies,
+  filterMovies
 };
 
 
