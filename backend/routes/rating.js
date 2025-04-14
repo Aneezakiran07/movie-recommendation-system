@@ -3,8 +3,7 @@ const router = express.Router();
 const {
   addRating,
   getRatingsByUser,
-  getRatingsByMovie,
-  getAverageRating
+  getRatingsByMovie
 } = require('../controllers/ratingController');
 
 // Add new rating
@@ -15,8 +14,5 @@ router.get('/user/:userId', getRatingsByUser);
 
 // Get all ratings for a movie
 router.get('/movie/:movieId', getRatingsByMovie);
-
-// Get average rating for a movie
-router.get('/movie/:movieId/average', getAverageRating);
 
 module.exports = router;

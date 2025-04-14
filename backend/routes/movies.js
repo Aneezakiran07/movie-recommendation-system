@@ -23,14 +23,13 @@ router.get('/search', searchMoviesByTitle);
 //  Movies by genre
 router.get('/genre/:genreId', getMoviesByGenre);
 
-//  Movie by ID
-router.get('/:id', getMovieById);
 
 // Movie recommendation
 router.get('/recommend/:userId', getRecommendedMovies);
 
 //filtered search
 router.get('/filter', filterMovies);
-
+//  Movie by ID
+router.get('/:id', getMovieById);
 
 module.exports = router;
