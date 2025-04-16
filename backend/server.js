@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 
@@ -15,6 +17,7 @@ const userRoutes = require('./routes/users');
 const ratingRoutes = require('./routes/rating');
 const watchlistRoutes = require('./routes/watchlist');
 const likeRoutes = require('./routes/likes');
+const authRoutes = require('./routes/auth');
 
 // Root route
 app.get('/', (req, res) => {
@@ -28,6 +31,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/ratings', ratingRoutes);
 app.use('/api/watchlist', watchlistRoutes);
 app.use('/api/likes', likeRoutes);
+app.use('/api/auth', authRoutes);
 
 
 // Start server
