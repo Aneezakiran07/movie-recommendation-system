@@ -1,45 +1,131 @@
 /* Apply styles ONLY to Search Results page */
 .search-results-container {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  /* Unique class for search movies */
-  .search-movie-list {
-    display: flex;
-    flex-wrap: wrap;       /* Allow multiple movies in a row */
-    justify-content: center; /* Center them in the container */
-    gap: 20px;             /* Space between movies */
-  }
-  
-  .search-movie-card {
-    width: 300px;          /* Adjust width for better layout */
-    background-color: #222;
-    color: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.4);
-    text-align: center;
-    transition: transform 0.3s;
-  }
-  
-  .search-movie-card:hover {
-    transform: scale(1.05);
-  }
-  
-  .search-movie-poster {
-    width: 100%;
-    border-radius: 10px;
-  }
-  
-  .search-movie-card h3 {
-    margin: 12px 0 8px;
-    font-size: 20px;
-  }
-  
-  .search-movie-card p {
-    font-size: 16px;
-    color: #ccc;
-    text-align: justify;
-    line-height: 1.5;
-  }  
+  text-align: center;
+  padding: 40px; /* Increased padding for better spacing */
+  background-color: #111; /* Dark background for the results page */
+}
+
+/* Unique class for search movies */
+.search-movie-list {
+  display: flex;
+  flex-wrap: wrap; /* Allow multiple movies in a row */
+  justify-content: center; /* Center them in the container */
+  gap: 20px; /* Space between movies */
+}
+
+/* Styling for each movie card */
+.search-movie-card {
+  width: 300px; /* Adjust width for better layout */
+  background-color: #222;
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect on movie cards */
+.search-movie-card:hover {
+  transform: scale(1.05); /* Slight zoom-in effect */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.6); /* More prominent shadow on hover */
+}
+
+/* Movie poster image styling */
+.search-movie-poster {
+  width: 100%;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+/* Add a zoom effect on hover over the movie poster */
+.search-movie-poster:hover {
+  transform: scale(1.1); /* Zoom in the poster */
+}
+
+/* Movie title styling */
+.search-movie-card h3 {
+  margin: 12px 0 8px;
+  font-size: 20px;
+  color: #fff; /* White title for contrast */
+}
+
+/* Movie description and other details */
+.search-movie-card p {
+  font-size: 16px;
+  color: #ccc; /* Light grey text for descriptions */
+  text-align: justify;
+  line-height: 1.5;
+  margin-bottom: 10px; /* Space between paragraphs */
+}
+
+/* Heart button style */
+.heart-btn {
+  background: none;
+  border: none;
+  font-size: 48px; /* Increased font size for a larger heart icon */
+  color: #ccc; /* Default grey heart */
+  cursor: pointer;
+  transition: color 0.3s ease;
+  margin-top: 10px; /* Space between content and heart icon */
+  flex-grow: 0; /* Prevent heart button from stretching */
+}
+
+/* Filled heart when liked */
+.heart-btn.liked {
+  color: red; /* Red color when the movie is liked */
+}
+
+/* Hover effect on heart */
+.heart-btn:hover {
+  color: #ff4c4c; /* Highlighted red when hovered */
+}
+
+/* Like button container for alignment */
+.like-section {
+  display: flex;
+  justify-content: space-between; /* Space between buttons */
+  align-items: center;
+  margin: 10px 0;
+  width: 100%; /* Ensure buttons span across the full width */
+}
+
+/* Watchlist button style */
+.watchlist-btn {
+  background: none;
+  border: none;
+  font-size: 48px; /* Increased font size for a larger watchlist icon */
+  color: #ccc; /* Default grey watchlist icon */
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+/* Filled watchlist when added */
+.watchlist-btn.in-watchlist {
+  color: red; /* Red color when the movie is in watchlist */
+}
+
+/* Hover effect on watchlist */
+.watchlist-btn:hover {
+  color: #ff4c4c; /* Highlighted red when hovered */
+}
+
+/* Positioning for the heart and watchlist icons */
+.like-section .heart-btn {
+  order: -1; /* Move the heart button to the extreme left */
+}
+
+.like-section .watchlist-btn {
+  order: 1; /* Move the watchlist button to the extreme right */
+}
+
+.custom-toast {
+  background-color: black !important;
+  color: red !important;
+  font-weight: bold;
+  text-align: center;
+}
+
+.custom-toast-body {
+  text-align: center;
+}

@@ -33,6 +33,42 @@
     transition: 0.3s ease-in-out;
 }
 
+/* Sign In Button */
+.login-button {
+    background-color: red; /* Red button color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Sign In Button Hover Effect */
+.login-button:hover {
+    background-color: darkred; /* Darker red on hover */
+}
+
+/* Logout Button */
+.logout-button {
+    background-color: red; /* Red button color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Logout Button Hover Effect */
+.logout-button:hover {
+    background-color: darkred; /* Darker red on hover */
+}
+
 /* Search Box */
 .search-box {
     display: flex;

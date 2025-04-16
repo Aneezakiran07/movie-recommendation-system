@@ -1,0 +1,44 @@
+/* Page container */
+.user-profile-container {
+    background-color: #000; /* Full black background */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 20px 20px; /* More top padding, less bottom */
+    box-sizing: border-box;
+  }
+  
+  /* Heading */
+  .user-profile-heading {
+    color: #ffd700; /* Yellow color */
+    font-size: 36px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  /* Profile card */
+  .user-profile-card {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 40px 50px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid #333;
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .user-profile-card p {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+  
+  .user-profile-card strong {
+    color: #ff4c4c; /* Red for field labels */
+    font-weight: 600;
+  }  
