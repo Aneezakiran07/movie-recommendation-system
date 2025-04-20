@@ -21,7 +21,7 @@ const likeMovie = async (req, res) => {
 
     res.status(201).json({ message: 'Movie liked successfully' });
   } catch (err) {
-    console.error('❌ Error liking movie:', err);
+    console.error(' Error liking movie:', err);
     res.status(500).json({ error: 'Failed to like movie' });
   }
 };

@@ -1,4 +1,4 @@
-const sql = require('mssql');
+const sql = require('mssql/msnodesqlv8'); //  Use correct driver
 
 // Database Configuration
 const config = {
@@ -6,6 +6,7 @@ const config = {
   database: 'dbp',
   driver: 'msnodesqlv8',
   options: {
+    trustedConnection: true,        // Needed for Windows Auth
     encrypt: false,
     trustServerCertificate: true,
     enableArithAbort: true
