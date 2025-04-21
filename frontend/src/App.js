@@ -12,6 +12,9 @@ import UserProfile from "./pages/userProfile";
 
 // 🔥 Import and wrap with AuthProvider
 import { AuthProvider } from "./context/AuthContext";
+import SignUp from './pages/signUp';
+
+
 
 function App() {
   return (
@@ -27,6 +30,8 @@ function App() {
               <Route path="/movie/:id/:title" element={<MovieDetails />} />
               <Route path="/login" element={<Login />} />
               <Route path="/profile" element={<UserProfile />} />
+              <Route path="/signup" element={<SignUp />} />
+
             </Routes>
           </div>
           <Footer />

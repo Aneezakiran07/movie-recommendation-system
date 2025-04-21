@@ -21,9 +21,14 @@ const loginController = async (req, res) => {
     if (!user) {
       return res.status(400).json({ msg: 'Invalid email or password' });
     }
+// Replace this line
+const isMatch = await bcrypt.compare(password, user.password);
+
+// With this (TEMP ONLY)
+//const isMatch = password === user.password;
 
     // Compare the provided password with hashed password
-    const isMatch = await bcrypt.compare(password, user.password);
+    //const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ msg: 'Invalid email or password' });
     }

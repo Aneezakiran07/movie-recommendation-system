@@ -4,16 +4,15 @@ import "./navbar.css";
 
 function Navbar() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [user, setUser] = useState(null);  // Track logged-in user
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user is logged in by retrieving from localStorage
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser)); // Set the logged-in user
+      setUser(JSON.parse(storedUser));
     }
-  }, []); // Empty array ensures this effect runs once after the component mounts
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -29,9 +28,9 @@ function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    setUser(null);  // Clear the user state
-    navigate("/");  // Redirect to home after logout
-    window.location.reload();  // Force page refresh to update Navbar
+    setUser(null);
+    navigate("/");
+    window.location.reload();
   };
 
   return (
@@ -49,7 +48,11 @@ function Navbar() {
             <button onClick={handleLogout} className="nav-item logout-button">Logout</button>
           </>
         ) : (
-          <button onClick={handleLoginClick} className="nav-item login-button">Sign In</button>
+          <>
+            <button onClick={() => navigate("/login")} className="nav-item login-button">Sign In</button>
+<button onClick={() => navigate("/signup")} className="nav-item login-button">Sign Up</button>
+
+          </>
         )}
       </div>
 
