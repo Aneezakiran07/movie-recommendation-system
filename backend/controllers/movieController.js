@@ -98,7 +98,7 @@ const getRecommendedMovies = async (req, res) => {
   const userId = req.params.userId;
 
   const query = `
-   SELECT TOP 20 m.*
+   SELECT DISTINCT TOP 20 m.*
 FROM Movies m
 JOIN movie_genres mg ON m.Movie_id = mg.movie_id
 WHERE mg.genre_id IN (
