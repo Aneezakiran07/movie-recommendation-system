@@ -88,7 +88,7 @@ function MovieDetails() {
         className="movie-poster"
       />
       <p><strong>Overview:</strong> {movie.description || "No description available."}</p>
-      <p><strong>⭐ Rating:</strong> {movie.ratings ? movie.ratings.toFixed(1) : "N/A"}</p>
+      <p><strong>⭐ IMDB Rating:</strong> {movie.ratings ? movie.ratings.toFixed(1) : "N/A"}</p>
       <p><strong>🌍 Language:</strong> {movie.original_language?.toUpperCase() || "Unknown"}</p>
       <p><strong>📏 Duration:</strong> {movie.duration_minutes || "Unknown"} min</p>
       <p><strong>📅 Release Date:</strong> {movie.release_date || "Unknown"}</p>

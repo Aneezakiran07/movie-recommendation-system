@@ -16,6 +16,7 @@ function SearchResults() {
   const [error, setError] = useState(null);
   const [likedMovies, setLikedMovies] = useState(new Set());
   const [watchlist, setWatchlist] = useState(new Set());
+  const [userRatings, setUserRatings] = useState({}); // <-- NEW STATE for ratings
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -149,6 +150,32 @@ function SearchResults() {
     }
   };
 
+  const handleRating = async (movieId, rating) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:4000/api/ratings/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: user.user_id, movie_id: movieId, rating }),
+      });
+
+      if (res.ok) {
+        setUserRatings((prev) => ({ ...prev, [movieId]: rating }));
+        toast.success("Rated successfully!");
+      } else {
+        toast.error("You already rated this movie!");
+      }
+    } catch (err) {
+      console.error("Error rating movie:", err);
+      toast.error("Failed to rate the movie!");
+    }
+  };
+
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
@@ -163,6 +190,7 @@ function SearchResults() {
 
             const isLiked = likedMovies.has(movie.Movie_id);
             const isInWatchlist = watchlist.has(movie.Movie_id);
+            const currentRating = userRatings[movie.Movie_id] || 0;
 
             return (
               <div
@@ -175,38 +203,57 @@ function SearchResults() {
                 <h3>{movie.title}</h3>
 
                 <div className="icon-section" style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
-                <button
-                  className={`heart-btn ${isLiked ? "liked" : ""}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleLikeClick(movie.Movie_id);
-                  }}
-                  style={{
-                    fontSize: "40px", // Increased font size for heart icon
-                    marginLeft: "10px", // Space to the left of the heart icon
-                    color: isLiked ? "red" : "#ccc", // Red when liked, grey otherwise
-                  }}
-                >
-                  ❤️
-                </button>
+                  <button
+                    className={`heart-btn ${isLiked ? "liked" : ""}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLikeClick(movie.Movie_id);
+                    }}
+                    style={{
+                      fontSize: "40px",
+                      marginLeft: "10px",
+                      color: isLiked ? "red" : "#ccc",
+                    }}
+                  >
+                    ❤️
+                  </button>
 
-                <button
-                  className={`watchlist-btn ${isInWatchlist ? "liked" : ""}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleAddToWatchlist(movie.Movie_id);
-                  }}
-                  style={{
-                    fontSize: "40px", // Increased font size for watchlist icon
-                    marginRight: "10px", // Space to the right of the watchlist icon
-                    color: isInWatchlist ? "red" : "#ccc", // Red when added to watchlist, grey otherwise
-                  }}
-                >
-                  📋
-                </button>
-                
+                  <button
+                    className={`watchlist-btn ${isInWatchlist ? "liked" : ""}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleAddToWatchlist(movie.Movie_id);
+                    }}
+                    style={{
+                      fontSize: "40px",
+                      marginRight: "10px",
+                      color: isInWatchlist ? "red" : "#ccc",
+                    }}
+                  >
+                    📋
+                  </button>
                 </div>
-                <p><strong>⭐ Rating:</strong> {movie.ratings ? movie.ratings.toFixed(1) : "N/A"}</p>
+
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  style={{ marginTop: "10px" }}
+                >
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <span
+                      key={star}
+                      style={{
+                        fontSize: "24px",
+                        cursor: "pointer",
+                        color: currentRating >= star ? "gold" : "#ccc",
+                      }}
+                      onClick={() => handleRating(movie.Movie_id, star)}
+                    >
+                      ⭐
+                    </span>
+                  ))}
+                </div>
+
+                <p><strong>⭐ IMDB Rating:</strong> {movie.ratings ? movie.ratings.toFixed(1) : "N/A"}</p>
                 <p><strong>🌍 Language:</strong> {movie.original_language?.toUpperCase() || "Unknown"}</p>
                 <p><strong>📏 Duration:</strong> {movie.duration_minutes || "Unknown"} min</p>
                 <p><strong>🕒 Release Date:</strong> {new Date(movie.release_date).toISOString().split("T")[0].replace(/-/g, ":")}</p>

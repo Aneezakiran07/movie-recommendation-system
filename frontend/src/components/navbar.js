@@ -21,10 +21,6 @@ function Navbar() {
     }
   };
 
-  const handleLoginClick = () => {
-    navigate("/login");
-  };
-
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
@@ -40,6 +36,7 @@ function Navbar() {
         <Link to="/recommended" className="nav-item">Recommended For You</Link>
         <Link to="/liked" className="nav-item">Liked Movies</Link>
         <Link to="/watchlist" className="nav-item">Watchlist</Link>
+        <Link to="/ratinglist" className="nav-item">Rating List</Link>
         <Link to="/about" className="nav-item">About</Link>
 
         {user ? (

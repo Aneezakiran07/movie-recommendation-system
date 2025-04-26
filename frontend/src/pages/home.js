@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FaStar } from "react-icons/fa";  
+import { FaStar } from "react-icons/fa";
 import "./home.css";
 
 const BACKEND_URL = "http://localhost:4000/api/movies/top-rated";
@@ -27,9 +27,11 @@ function Home() {
                 `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(movie.title)}`
               );
               const movieData = tmdbResponse.data.results[0] || {};
-              return { 
-                ...movie, 
-                poster: movieData.poster_path ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}` : "/images/default.jpg"
+              return {
+                ...movie,
+                poster: movieData.poster_path
+                  ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
+                  : "/images/default.jpg",
               };
             } catch (err) {
               console.error(`❌ Failed to fetch poster for "${movie.title}":`, err);
@@ -65,12 +67,14 @@ function Home() {
               <h2 className="movie-title">{movie.title}</h2>
 
               <p className="movie-extra">
-              <br /><br />
-              <span>Release Date: </span> 
-<strong>{new Date(movie.release_date).toISOString().split("T")[0].replace(/-/g, ":")}</strong><br />
-                <span>🌍Language: </span> <strong>{(movie.original_language || "N/A").toUpperCase()}</strong> <br />
-                <span>Rating: </span> <FaStar color="yellow" size={16} /> <strong>{movie.ratings}</strong> <br />
-                <span>Duration: </span> <strong>{movie.duration_minutes}</strong> min
+                <span>Release Date: </span>
+                <strong>{new Date(movie.release_date).toISOString().split("T")[0].replace(/-/g, ":")}</strong><br />
+                <span>🌍 Language: </span>
+                <strong>{(movie.original_language || "N/A").toUpperCase()}</strong><br />
+                <span>Rating: </span>
+                <FaStar color="yellow" size={16} /> <strong>{movie.ratings}</strong><br />
+                <span>Duration: </span>
+                <strong>{movie.duration_minutes}</strong> min
               </p>
             </div>
           ))

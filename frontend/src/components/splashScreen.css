@@ -1,0 +1,37 @@
+.splash-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #000; /* black background */
+    color: #e50914; /* Netflix red */
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    position: relative;
+  }
+  
+  .splash-text {
+    font-size: 80px; /* Huge app name */
+    font-weight: 900;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  /* ALWAYS reserve tagline space */
+  .splash-tagline {
+    font-size: 28px;
+    height: 40px; /* Reserve enough space always */
+    margin-top: 20px;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  /* When tagline shows */
+  .splash-tagline.show {
+    opacity: 1;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }  

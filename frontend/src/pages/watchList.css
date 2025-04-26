@@ -1,0 +1,107 @@
+/* Watchlist Page Styling */
+.watchlist-page {
+  text-align: center;
+  padding: 40px;
+  background-color: #111; /* Dark background */
+  min-height: 100vh;
+}
+
+/* Watchlist Title */
+.watchlist-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 30px;
+}
+
+/* Empty message */
+.watchlist-empty {
+  color: #ccc;
+  font-size: 1.2rem;
+}
+
+/* Movies grid */
+.watchlist-movies-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Single movie card */
+.watchlist-movie-card {
+  width: 300px;
+  background-color: #222;
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+/* Hover effect */
+.watchlist-movie-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.6);
+}
+
+/* Poster Image */
+.watchlist-movie-poster {
+  width: 100%;
+  height: 450px; /* Increased height for proper image view */
+  object-fit: cover; /* Show full image properly */
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+/* Zoom on hover poster */
+.watchlist-movie-poster:hover {
+  transform: scale(1.1);
+}
+
+/* Title */
+.watchlist-movie-title {
+  margin: 12px 0 8px;
+  font-size: 20px;
+  color: #fff;
+}
+
+/* Movie details text */
+.watchlist-movie-card p {
+  font-size: 16px;
+  color: #ccc;
+  text-align: justify;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+/* No poster placeholder */
+.watchlist-no-poster {
+  width: 100%;
+  height: 450px;
+  background-color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 18px;
+  color: #aaa;
+}
+
+/* Delete Icon */
+.watchlist-delete-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: #ccc;
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+/* Delete Icon Hover */
+.watchlist-delete-icon:hover {
+  color: #ff4c4c;
+}
