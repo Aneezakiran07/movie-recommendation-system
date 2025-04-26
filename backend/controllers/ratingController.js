@@ -34,7 +34,7 @@ const getRatingsByUser = async (req, res) => {
     const pool = await connectToDB();
     const result = await pool.request()
       .input('userId', sql.Int, userId)
-      .query('SELECT * FROM Ratings WHERE user_id = @userId');
+      .query('SELECT M.* FROM Ratings R JOIN Movies M ON M.Movie_id = R.movie_id WHERE user_id = @userId');
 
     res.json(result.recordset);
   } catch (err) {
