@@ -27,6 +27,7 @@ const addRating = async (req, res) => {
 };
 
 //  Get ratings by user ID
+//  Get ratings by user ID
 const getRatingsByUser = async (req, res) => {
   const userId = req.params.userId;
 
@@ -34,14 +35,20 @@ const getRatingsByUser = async (req, res) => {
     const pool = await connectToDB();
     const result = await pool.request()
       .input('userId', sql.Int, userId)
-      .query('SELECT M.* FROM Ratings R JOIN Movies M ON M.Movie_id = R.movie_id WHERE user_id = @userId');
+      .query(`
+        SELECT M.*, R.rating AS user_rating
+        FROM Ratings R
+        JOIN Movies M ON M.movie_id = R.movie_id
+        WHERE R.user_id = @userId
+      `);
 
     res.json(result.recordset);
   } catch (err) {
-    console.error(' Error fetching user ratings:', err);
+    console.error('Error fetching user ratings:', err);
     res.status(500).json({ error: 'Failed to fetch user ratings' });
   }
 };
+
 
 //  Get ratings by movie ID
 const getRatingsByMovie = async (req, res) => {
