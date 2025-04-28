@@ -34,10 +34,15 @@ const getWatchlist = async (req, res) => {
     const result = await pool.request()
       .input('userId', sql.Int, userId)
       .query(`
-        SELECT m.*
-        FROM WatchList w
-        JOIN Movies m ON w.movie_id = m.Movie_id
-        WHERE w.user_id = @userId
+      SELECT  M.Movie_id, M.title, M.duration_minutes, M.description, M.release_date, M.original_language, M.ratings, 
+      STRING_AGG(G.genre_name, ', ') AS Genres
+      FROM Watchlist w
+      JOIN Movies m ON w.movie_id = m.Movie_id
+      JOIN movie_genres mg ON m.Movie_id = mg.movie_id
+      JOIN genres G ON G.genre_id = MG.genre_id
+      WHERE w.user_id = @userId
+      GROUP BY M.Movie_id, M.title, M.duration_minutes, M.description, M.release_date, M.original_language, M.ratings
+    
       `);
 
     res.json(result.recordset);

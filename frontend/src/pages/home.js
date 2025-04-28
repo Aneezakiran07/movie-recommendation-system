@@ -231,10 +231,14 @@ function Home() {
                   </select>
                 </div>
 
+               <div className="text-card">     
                 <p><strong>⭐ IMDB Rating:</strong> {movie.ratings ? movie.ratings.toFixed(1) : "N/A"}</p>
                 <p><strong>🌍 Language:</strong> {movie.original_language?.toUpperCase() || "Unknown"}</p>
                 <p><strong>📏 Duration:</strong> {movie.duration_minutes || "Unknown"} min</p>
                 <p><strong>🕒 Release Date:</strong> {new Date(movie.release_date).toISOString().split("T")[0].replace(/-/g, ":")}</p>
+                <p><strong>🎭 Genres:</strong> {movie.Genres}</p>
+                </div>
+
               </div>
             );
           })

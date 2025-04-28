@@ -35,10 +35,14 @@ const getLikedMovies = async (req, res) => {
     const result = await pool.request()
       .input('userId', sql.Int, userId)
       .query(`
-        SELECT m.*
+        SELECT  M.Movie_id, M.title, M.duration_minutes, M.description, M.release_date, M.original_language, M.ratings, 
+        STRING_AGG(G.genre_name, ', ') AS Genres
         FROM Likes l
         JOIN Movies m ON l.movie_id = m.Movie_id
+        JOIN movie_genres mg ON m.Movie_id = mg.movie_id
+        JOIN genres G ON G.genre_id = MG.genre_id
         WHERE l.user_id = @userId AND l.liked_status = 1
+        GROUP BY M.Movie_id, M.title, M.duration_minutes, M.description, M.release_date, M.original_language, M.ratings
       `);
 
     res.json(result.recordset);

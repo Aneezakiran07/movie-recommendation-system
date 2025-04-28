@@ -1,6 +1,5 @@
 const { connectToDB, sql } = require('../db');
-
-
+const axios = require('axios');
 
 //  GET all movies
 const getAllMovies = async (req, res) => {
@@ -19,7 +18,14 @@ const getTopRatedMovies = async (req, res) => {
   try {
     const pool = await connectToDB();
     const result = await pool.request().query(`
-      SELECT * FROM Movies ORDER BY ratings DESC 
+    SELECT M.Movie_id, M.title, M.duration_minutes, M.description, M.release_date, M.original_language, M.ratings, 
+    STRING_AGG(G.genre_name, ', ') AS Genres
+    FROM Movies M
+    JOIN movie_genres MG ON M.Movie_id = MG.movie_id
+    JOIN genres G ON G.genre_id = MG.genre_id
+    GROUP BY M.Movie_id, M.title, M.duration_minutes, M.description, M.release_date, M.original_language, M.ratings
+    ORDER BY M.ratings DESC
+
     `);
     res.json(result.recordset);
   } catch (err) {
@@ -41,7 +47,15 @@ const searchMoviesByTitle = async (req, res) => {
     const result = await pool
       .request()
       .input('title', sql.VarChar, `%${title}%`)
-      .query('SELECT * FROM Movies WHERE title LIKE @title');
+      .query(`
+      SELECT M.Movie_id, M.title, M.duration_minutes, M.description, M.release_date, M.original_language, M.ratings, 
+      STRING_AGG(G.genre_name, ', ') AS Genres
+      FROM Movies M
+      JOIN movie_genres MG ON M.Movie_id = MG.movie_id
+      JOIN genres G ON G.genre_id = MG.genre_id
+      WHERE title LIKE @title
+      GROUP BY M.Movie_id, M.title, M.duration_minutes, M.description, M.release_date, M.original_language, M.ratings
+    `);
     
     res.json(result.recordset);
   } catch (err) {
@@ -92,16 +106,17 @@ const getMovieById = async (req, res) => {
     res.status(500).json({ error: 'Failed to retrieve movie' });
   }
 };
-
 //  GET recommended movies for a user
 const getRecommendedMovies = async (req, res) => {
   const userId = req.params.userId;
 
   const query = `
-   SELECT DISTINCT TOP 20 m.*
-FROM Movies m
-JOIN movie_genres mg ON m.Movie_id = mg.movie_id
-WHERE mg.genre_id IN (
+   SELECT DISTINCT TOP 20 M.Movie_id, M.title, M.duration_minutes, M.description, M.release_date, M.original_language, M.ratings, 
+   STRING_AGG(G.genre_name, ', ') AS Genres
+  FROM Movies m
+  JOIN movie_genres mg ON m.Movie_id = mg.movie_id
+  JOIN genres G ON G.genre_id = MG.genre_id
+  WHERE mg.genre_id IN (
     SELECT DISTINCT mg.genre_id
     FROM movie_genres mg
     JOIN Ratings r ON mg.movie_id = r.movie_id
@@ -125,6 +140,7 @@ AND m.Movie_id NOT IN (
     UNION
     SELECT movie_id FROM Watchlist WHERE user_id = @userId
 )
+GROUP BY M.Movie_id, M.title, M.duration_minutes, M.description, M.release_date, M.original_language, M.ratings
 ORDER BY m.ratings DESC;
 
   `;

@@ -257,6 +257,7 @@ const RecommendedList = () => {
                   <p><strong>🌍 Language:</strong> {movie.original_language?.toUpperCase() || "Unknown"}</p>
                   <p><strong>📏 Duration:</strong> {movie.duration_minutes ? `${movie.duration_minutes} min` : "Unknown"}</p>
                   <p><strong>🕒 Release Date:</strong> {movie.release_date ? new Date(movie.release_date).toISOString().split("T")[0].replace(/-/g, ":") : "Unknown"}</p>
+                  <p><strong>🎭 Genres:</strong> {movie.Genres}</p>
                 </div>
               </div>
             );

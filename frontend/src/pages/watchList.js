@@ -42,6 +42,7 @@ const WatchList = () => {
             original_language: movie.original_language,
             duration_minutes: movie.duration_minutes,
             release_date: movie.release_date,
+            Genres: movie.Genres,
             posterPath: posterPath,
           };
         })
@@ -119,6 +120,7 @@ const WatchList = () => {
               <p><strong>🌍 Language:</strong> {movie.original_language?.toUpperCase() || "Unknown"}</p>
               <p><strong>📏 Duration:</strong> {movie.duration_minutes ? `${movie.duration_minutes} min` : "Unknown"}</p>
               <p><strong>🕒 Release Date:</strong> {new Date(movie.release_date).toISOString().split("T")[0].replace(/-/g, ":")}</p>
+              <p><strong>🎭 Genres:</strong> {movie.Genres}</p>
             </div>
           ))}
         </div>
