@@ -16,7 +16,7 @@ function SearchResults() {
   const [error, setError] = useState(null);
   const [likedMovies, setLikedMovies] = useState(new Set());
   const [watchlist, setWatchlist] = useState(new Set());
-  const [userRatings, setUserRatings] = useState({}); // <-- NEW STATE for ratings
+  const [userRatings, setUserRatings] = useState({});
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -166,7 +166,7 @@ function SearchResults() {
 
       if (res.ok) {
         setUserRatings((prev) => ({ ...prev, [movieId]: rating }));
-        toast.success("Rated successfully!");
+        toast.success(`You rated ${rating}/10`);
       } else {
         toast.error("You already rated this movie!");
       }
@@ -190,7 +190,7 @@ function SearchResults() {
 
             const isLiked = likedMovies.has(movie.Movie_id);
             const isInWatchlist = watchlist.has(movie.Movie_id);
-            const currentRating = userRatings[movie.Movie_id] || 0;
+            const currentRating = userRatings[movie.Movie_id] || "";
 
             return (
               <div
@@ -234,23 +234,28 @@ function SearchResults() {
                   </button>
                 </div>
 
-                <div
-                  onClick={(e) => e.stopPropagation()}
-                  style={{ marginTop: "10px" }}
-                >
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <span
-                      key={star}
-                      style={{
-                        fontSize: "24px",
-                        cursor: "pointer",
-                        color: currentRating >= star ? "gold" : "#ccc",
-                      }}
-                      onClick={() => handleRating(movie.Movie_id, star)}
-                    >
-                      ⭐
-                    </span>
-                  ))}
+                {/* Cleaner Rating Dropdown */}
+                <div onClick={(e) => e.stopPropagation()} style={{ marginTop: "10px" }}>
+                  <select
+                    value={currentRating}
+                    onChange={(e) => handleRating(movie.Movie_id, parseInt(e.target.value))}
+                    style={{
+                      color:"white",
+                      backgroundColor: "black",
+                      padding: "5px",
+                      fontSize: "16px",
+                      borderRadius: "5px",
+                      marginTop: "5px",
+                      width: "100%",
+                    }}
+                  >
+                    <option value="" disabled>Rate Movie</option>
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((rating) => (
+                      <option key={rating} value={rating}>
+                        {rating}/10
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <p><strong>⭐ IMDB Rating:</strong> {movie.ratings ? movie.ratings.toFixed(1) : "N/A"}</p>

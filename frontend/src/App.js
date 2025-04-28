@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import ScrollRestoration from './ScrollRestoration';
 import SplashScreen from "./components/splashScreen";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
@@ -42,6 +43,7 @@ function App() {
             <SplashScreen />
           ) : (
             <>
+              <ScrollRestoration />
               <Navbar />
               <div className="main-content">
                 <Routes>

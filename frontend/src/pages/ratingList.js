@@ -200,8 +200,9 @@ const RatedList = () => {
 
                 {/* Movie Info */}
                 <div style={{ marginTop: "8px", textAlign: "center" }}>
-                  <p><strong>⭐ IMDB Rating:</strong> {movie.ratings ? movie.ratings.toFixed(1) : "N/A"}</p>
+                  <p><strong>⭐ User Rating:</strong> {movie.user_rating ? movie.user_rating.toFixed(1) : "N/A"}</p>
                   <p><strong>🌍 Language:</strong> {movie.original_language?.toUpperCase() || "Unknown"}</p>
+                  <p><strong>⭐ IMDB Rating:</strong> {movie.ratings ? movie.ratings.toFixed(1) : "N/A"}</p>
                   <p><strong>📏 Duration:</strong> {movie.duration_minutes ? `${movie.duration_minutes} min` : "Unknown"}</p>
                   <p><strong>🕒 Release Date:</strong> {new Date(movie.release_date).toISOString().split("T")[0].replace(/-/g, ":")}</p>
                 </div>

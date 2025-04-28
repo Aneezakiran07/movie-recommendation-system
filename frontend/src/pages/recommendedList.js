@@ -155,7 +155,7 @@ const RecommendedList = () => {
           {recommendedMovies.map((movie) => {
             const isLiked = likedMovies.has(movie.Movie_id);
             const isInWatchlist = watchlist.has(movie.Movie_id);
-            const currentRating = userRatings[movie.Movie_id] || 0;
+            const currentRating = userRatings[movie.Movie_id] || "";
 
             return (
               <div
@@ -174,11 +174,11 @@ const RecommendedList = () => {
                   <div className="recommended-no-poster">No Poster Found</div>
                 )}
 
-                {/* Movie Title - below poster, larger font */}
+                {/* Movie Title */}
                 <h2 
                   className="recommended-movie-title"
                   style={{
-                    fontSize: "22px",    // Increased font size
+                    fontSize: "22px",
                     marginTop: "10px",
                     textAlign: "center"
                   }}
@@ -227,24 +227,28 @@ const RecommendedList = () => {
                   </button>
                 </div>
 
-                {/* Rating Section */}
-                <div
-                  onClick={(e) => e.stopPropagation()}
-                  style={{ marginTop: "10px", textAlign: "center" }}
-                >
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <span
-                      key={star}
-                      onClick={(e) => handleRating(e, movie.Movie_id, star)}
-                      style={{
-                        cursor: "pointer",
-                        color: currentRating >= star ? "gold" : "#ccc",
-                        fontSize: "24px",
-                      }}
-                    >
-                      ⭐
-                    </span>
-                  ))}
+                {/* Rating Dropdown */}
+                <div onClick={(e) => e.stopPropagation()} style={{ marginTop: "10px" }}>
+                  <select
+                    value={currentRating}
+                    onChange={(e) => handleRating(e, movie.Movie_id, parseInt(e.target.value))}
+                    style={{
+                      color:"white",
+                      backgroundColor: "black",
+                      padding: "5px",
+                      fontSize: "16px",
+                      borderRadius: "5px",
+                      marginTop: "5px",
+                      width: "100%",
+                    }}
+                  >
+                    <option value="" disabled>Rate Movie</option>
+                    {[1,2,3,4,5,6,7,8,9,10].map((rating) => (
+                      <option key={rating} value={rating}>
+                        {rating}/10
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 {/* Movie Info */}
@@ -252,7 +256,7 @@ const RecommendedList = () => {
                   <p><strong>⭐ IMDB Rating:</strong> {movie.ratings ? movie.ratings.toFixed(1) : "N/A"}</p>
                   <p><strong>🌍 Language:</strong> {movie.original_language?.toUpperCase() || "Unknown"}</p>
                   <p><strong>📏 Duration:</strong> {movie.duration_minutes ? `${movie.duration_minutes} min` : "Unknown"}</p>
-                  <p><strong>🕒 Release Date:</strong> {new Date(movie.release_date).toISOString().split("T")[0].replace(/-/g, ":")}</p>
+                  <p><strong>🕒 Release Date:</strong> {movie.release_date ? new Date(movie.release_date).toISOString().split("T")[0].replace(/-/g, ":") : "Unknown"}</p>
                 </div>
               </div>
             );
