@@ -12,6 +12,7 @@ const RatedList = () => {
   const [ratedMovies, setRatedMovies] = useState([]);
   const [likedMovies, setLikedMovies] = useState(new Set());
   const [watchlist, setWatchlist] = useState(new Set());
+  const [ratingMap, setRatingMap] = useState({});
 
   const fetchPosterFromTMDB = useCallback(async (title) => {
     try {
@@ -41,6 +42,14 @@ const RatedList = () => {
       );
 
       setRatedMovies(moviesWithPoster);
+
+      // Store initial rating in dropdowns
+      const map = {};
+      moviesWithPoster.forEach((movie) => {
+        map[movie.Movie_id] = movie.user_rating || "";
+      });
+      setRatingMap(map);
+
     } catch (error) {
       console.error('Error fetching rated movies:', error);
     }
@@ -110,6 +119,33 @@ const RatedList = () => {
     }
   };
 
+  const handleRatingChange = async (e, movieId) => {
+    const newRating = parseFloat(e.target.value);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:4000/api/ratings/update-rating", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: user.user_id, movie_id: movieId, rating: newRating }),
+      });
+
+      if (res.ok) {
+        toast.success("Rating updated successfully!");
+        fetchRatedMovies(user.user_id); // Refresh
+      } else {
+        toast.error("Failed to update rating.");
+      }
+    } catch (err) {
+      console.error("Error updating rating:", err);
+      toast.error("Something went wrong. Please try again.");
+    }
+  };
+
   return (
     <div className="rated-page">
       <h1 className="rated-title">My Rating List</h1>
@@ -145,60 +181,51 @@ const RatedList = () => {
                   <div className="rated-no-poster">No Poster Found</div>
                 )}
 
-                {/* Movie Title - below poster, larger font */}
-                <h2 
-                  className="rated-movie-title"
-                  style={{
-                    fontSize: "22px",    // Increased font size
-                    marginTop: "10px",
-                    textAlign: "center"
-                  }}
-                >
+                <h2 className="rated-movie-title" style={{ fontSize: "22px", marginTop: "10px", textAlign: "center" }}>
                   {movie.title}
                 </h2>
 
-                {/* Like and Watchlist Buttons */}
-                <div 
-                  className="rated-movie-actions"
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    width: "100%",
-                    marginTop: "8px"
-                  }}
-                >
+                <div className="rated-movie-actions" style={{ display: "flex", justifyContent: "space-between", width: "100%", marginTop: "8px" }}>
                   <button
                     className="heart-btn"
                     onClick={(e) => handleLikeClick(e, movie.Movie_id)}
-                    style={{
-                      fontSize: "30px",
-                      marginLeft: "10px",
-                      color: isLiked ? "red" : "#ccc",
-                      background: "transparent",
-                      border: "none",
-                      cursor: "pointer"
-                    }}
+                    style={{ fontSize: "30px", marginLeft: "10px", color: isLiked ? "red" : "#ccc", background: "transparent", border: "none", cursor: "pointer" }}
                   >
                     ❤️
                   </button>
-
                   <button
                     className="watchlist-btn"
                     onClick={(e) => handleAddToWatchlist(e, movie.Movie_id)}
-                    style={{
-                      fontSize: "30px",
-                      marginRight: "10px",
-                      color: isInWatchlist ? "red" : "#ccc",
-                      background: "transparent",
-                      border: "none",
-                      cursor: "pointer"
-                    }}
+                    style={{ fontSize: "30px", marginRight: "10px", color: isInWatchlist ? "red" : "#ccc", background: "transparent", border: "none", cursor: "pointer" }}
                   >
                     📋
                   </button>
                 </div>
 
-                {/* Movie Info */}
+                {/* Rating Dropdown */}
+                <div onClick={(e) => e.stopPropagation()} style={{ marginTop: "10px" }}>
+                    <select
+                      value={ratingMap[movie.Movie_id] || ""}
+                      onChange={(e) => handleRatingChange(e, movie.Movie_id)}
+                      style={{
+                        color: "white",
+                        backgroundColor: "black",
+                        padding: "5px",
+                        fontSize: "16px",
+                        borderRadius: "5px",
+                        marginTop: "5px",
+                        width: "100%",
+                      }}
+                    >
+                      <option value="" disabled>Update Rating</option>
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((rating) => (
+                        <option key={rating} value={rating}>
+                          {rating}/10
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
                 <div style={{ marginTop: "8px", textAlign: "center" }}>
                   <p><strong>⭐ User Rating:</strong> {movie.user_rating ? movie.user_rating.toFixed(1) : "N/A"}</p>
                   <p><strong>🌍 Language:</strong> {movie.original_language?.toUpperCase() || "Unknown"}</p>
@@ -206,7 +233,8 @@ const RatedList = () => {
                   <p><strong>📏 Duration:</strong> {movie.duration_minutes ? `${movie.duration_minutes} min` : "Unknown"}</p>
                   <p><strong>🕒 Release Date:</strong> {new Date(movie.release_date).toISOString().split("T")[0].replace(/-/g, ":")}</p>
                   <p><strong>🎭 Genres:</strong> {movie.Genres}</p>
-                </div>
+
+                  </div>
               </div>
             );
           })}

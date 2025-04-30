@@ -11,6 +11,7 @@ function SearchResults() {
   const [allMovies, setAllMovies] = useState([]);
   const [visibleMovies, setVisibleMovies] = useState([]);
   const [page, setPage] = useState(1);
+  const [loadedPages, setLoadedPages] = useState(new Set());
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState(null);
@@ -39,6 +40,7 @@ function SearchResults() {
         setAllMovies(data);
         setVisibleMovies([]);
         setPage(1);
+        setLoadedPages(new Set()); // 🔄 Reset loaded pages
       } catch (err) {
         setError(err.message);
       } finally {
@@ -69,16 +71,24 @@ function SearchResults() {
 
   useEffect(() => {
     const load = async () => {
-      if (allMovies.length === 0) return;
+      if (allMovies.length === 0 || loadedPages.has(page)) return;
+
       const start = (page - 1) * MOVIES_PER_PAGE;
       const chunk = allMovies.slice(start, start + MOVIES_PER_PAGE);
       const withPosters = await loadMoviesWithPosters(chunk);
-      setVisibleMovies((prev) => [...prev, ...withPosters]);
+
+      setVisibleMovies((prev) => {
+        const seen = new Set(prev.map((m) => m.Movie_id));
+        const filtered = withPosters.filter((m) => !seen.has(m.Movie_id));
+        return [...prev, ...filtered];
+      });
+
+      setLoadedPages((prev) => new Set(prev).add(page));
       setLoadingMore(false);
     };
 
     if (!loading) load();
-  }, [page, allMovies, loadMoviesWithPosters, loading]);
+  }, [page, allMovies, loadMoviesWithPosters, loadedPages, loading]);
 
   useEffect(() => {
     if (loadingMore || loading) return;
@@ -234,13 +244,12 @@ function SearchResults() {
                   </button>
                 </div>
 
-                {/* Cleaner Rating Dropdown */}
                 <div onClick={(e) => e.stopPropagation()} style={{ marginTop: "10px" }}>
                   <select
                     value={currentRating}
                     onChange={(e) => handleRating(movie.Movie_id, parseInt(e.target.value))}
                     style={{
-                      color:"white",
+                      color: "white",
                       backgroundColor: "black",
                       padding: "5px",
                       fontSize: "16px",

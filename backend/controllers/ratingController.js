@@ -26,7 +26,32 @@ const addRating = async (req, res) => {
   }
 };
 
-//  Get ratings by user ID
+//  Update a rating
+const updateRating = async (req, res) => {
+  const { user_id, movie_id, rating } = req.body;
+
+  if (!user_id || !movie_id || !rating) {
+    return res.status(400).json({ error: 'user_id, movie_id, and rating are required' });
+  }
+
+  try {
+    const pool = await connectToDB();
+    await pool.request()
+      .input('user_id', sql.Int, user_id)
+      .input('movie_id', sql.Int, movie_id)
+      .input('rating', sql.Decimal(4, 2), rating)
+      .query(`
+          UPDATE Ratings SET rating = @rating 
+          WHERE user_id = @user_id AND movie_id = @movie_id
+      `);
+
+    res.status(201).json({ message: 'Rating updated successfully' });
+  } catch (err) {
+    console.error(' Error updating rating:', err);
+    res.status(500).json({ error: 'Failed to update rating' });
+  }
+};
+
 //  Get ratings by user ID
 const getRatingsByUser = async (req, res) => {
   const userId = req.params.userId;
@@ -77,7 +102,7 @@ const getRatingsByMovie = async (req, res) => {
 module.exports = {
   addRating,
   getRatingsByUser,
-  getRatingsByMovie
-
+  getRatingsByMovie,
+  updateRating
 };
 
